@@ -3,9 +3,9 @@ using System.Linq;
 using System.Windows.Forms;
 using System.ComponentModel;
 
-namespace DETools
+namespace Sys.db
 {
-	public static class DataGridViewHelper
+	public static class DbViewHelper
 	{
 		public static void ReplaceWithDropDownColumn (DataGridView dgv, string srcColumnaName, string dropDownColumnName, Type dropDownType = null)
 		{
@@ -23,7 +23,7 @@ namespace DETools
 			combo.DataPropertyName = srcColumnaName;
 			combo.DisplayMember = "Title";
 			combo.ValueMember = "Value";
-			combo.DataSource = Enum.GetValues(dropDownType).Cast<dynamic>().ToArray().Select(x => new { Title = tc.ConvertTo(x, typeof(String)), Value = tc.ConvertTo(x, dropDownType) }).ToList();
+			combo.DataSource = Enum.GetValues(dropDownType).Cast<dynamic>().ToArray().Select(x => new { Title = tc.ConvertTo(x, typeof(String)), Value = tc.ConvertTo(x, dgv.Columns[srcColumnaName].ValueType) }).ToList();
 			
 			if (dgv.Columns.Contains(dropDownColumnName))
 				dgv.Columns.Remove(dgv.Columns[dropDownColumnName]);
